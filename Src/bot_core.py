@@ -155,6 +155,7 @@ class Bot:
             y = 0
             # Load icon
             imgSrc = f'icons/{target}'
+            # print(imgSrc)
             template = cv2.imread(imgSrc, 0)
             # Compare images
             res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
@@ -356,7 +357,8 @@ class Bot:
         if (avail_buttons == 'dungeon_page.png').any(axis=None):
             # Swipe to the top
             [self.swipe([0, 0], [2, 0]) for i in range(14)]
-            self.click(30, 600, 5)  # stop scroll and scan screen for buttons
+            self.click(30, 600, 5)  # stop scroll and scan screen for buttons            
+            time.sleep(10)
             # Keep swiping until floor is found
             expanded = 0
             for i in range(10):
@@ -405,6 +407,10 @@ class Bot:
             # list of buttons
             if (df == 'fighting.png').any(axis=None) and not (df == '0cont_button.png').any(axis=None):
                 return df, 'fighting'
+            if (df == 'victory_chest.png').any(axis=None):                
+                self.logger.warning('victory_chest')
+                self.click(300, 1270)
+                return df, 'victory_chest'
             if (df == 'friend_menu.png').any(axis=None):
                 self.click_button(np.array([100, 600]))
                 return df, 'friend_menu'

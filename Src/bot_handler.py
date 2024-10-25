@@ -71,6 +71,8 @@ def combat_loop(bot, grid_df, mana_targets, user_target='demon_hunter.png'):
     bot.mana_level(mana_targets, hero_power=True)
     # Spawn units
     bot.click(450, 1360)
+    bot.click(450, 1360)
+    bot.click(450, 1360)
     # Try to merge units
     grid_df, unit_series, merge_series, df_groups, info = bot.try_merge(prev_grid=grid_df, merge_target=user_target)
     return grid_df, unit_series, merge_series, df_groups, info
@@ -130,9 +132,10 @@ def bot_loop(bot, info_event):
             # Wait until late stage in combat and if consistency is ok, not stagnate save all units for ML model
             if combat == 25 and 5 < grid_df['Age'].mean() < 50 and train_ai:
                 bot_perception.add_grid_to_dataset()
-        elif output[1] == 'home' and watch_ad:
-            [bot.watch_ads() for i in range(3)]
-            watch_ad = False
+        # DOESNT WORK
+        # elif output[1] == 'home' and watch_ad:
+        #     [bot.watch_ads() for i in range(3)]
+        #     watch_ad = False
         else:
             combat = 0
             bot.logger.info(f'{output[1]}, wait count: {wait}')
