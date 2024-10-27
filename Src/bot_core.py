@@ -347,6 +347,9 @@ class Bot:
 
     # Start a dungeon floor from PvE page
     def play_dungeon(self, floor=5):
+        # self.click(435, 1065, 10)
+        # self.click(600, 650, 5)
+        # return
         self.logger.debug(f'Starting Dungeon floor {floor}')
         # Divide by 3 and take ceiling of floor as int
         target_chapter = f'chapter_{int(np.ceil((floor)/3))}.png'
@@ -357,8 +360,7 @@ class Bot:
         if (avail_buttons == 'dungeon_page.png').any(axis=None):
             # Swipe to the top
             [self.swipe([0, 0], [2, 0]) for i in range(14)]
-            self.click(30, 600, 5)  # stop scroll and scan screen for buttons            
-            time.sleep(10)
+            self.click(30, 600, 5)  # stop scroll and scan screen for buttons
             # Keep swiping until floor is found
             expanded = 0
             for i in range(10):
@@ -411,6 +413,10 @@ class Bot:
                 self.logger.warning('victory_chest')
                 self.click(300, 1270)
                 return df, 'victory_chest'
+            if (df == 'support_chest.png').any(axis=None):                
+                self.logger.warning('support_chest')
+                self.click(300, 1270)
+                return df, 'support_chest'
             if (df == 'friend_menu.png').any(axis=None):
                 self.click_button(np.array([100, 600]))
                 return df, 'friend_menu'
